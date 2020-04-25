@@ -12,6 +12,10 @@ db.authenticate()
 const app = express();
 
 app.get('/',(req,res) => res.send('INDEX'));
+
+//Job routes
+app.use('/jobs', require('./routes/jobs'))
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`server started listening on port ${PORT}`));
