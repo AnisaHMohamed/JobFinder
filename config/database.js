@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // Option 1: Passing parameters separately
-module.exports = new Sequelize('JobFinder', 'postgres', 'postgres', {
+module.exports = new Sequelize('JobFinder', 'postgres', 'postgres', { //database,username, password
   host: 'localhost',
   dialect:'postgres',
   pool: {
