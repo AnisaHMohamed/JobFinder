@@ -1,40 +1,70 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('../config/database');
-const Job = require('../models/job')
+const db = require("../config/database");
+const Job = require("../models/job");
 
 //GET JOB LIST
-router.get('/', (req,res) => 
-Job.findAll()
-.then(jobs => {
-  res.render('jobs', {
-    jobs
-  })
-
-})
-.catch(err => console.log('ERROR' + err)))
+router.get("/", (req, res) =>
+  Job.findAll()
+    .then((jobs) => {
+      res.render("jobs", {
+        jobs,
+      });
+    })
+    .catch((err) => console.log("ERROR" + err))
+);
 
 //DISPLAY ADD A JOB FORM
-router.get('/add', (req,res) => res.render('add'))
+router.get("/add", (req, res) => res.render("add"));
 
 //ADD A JOB
-router.post('/add', (req,res) => {
-  const data = {
-    title: 'Simple wordpress website',
-    technologies: 'wordpress, php, html, css',
-    budget: '$1000',
-    description: 'Waze wufoo kippt, glogster. Zinch groupon sifteo palantir, disqus plugg. Weebly spotify bubbli bitly zoho, meebo divvyshot jajah eduvant tumblr, fleck wakoopa gooru. Twitter glogster cotweet mobly zoho kosmix, fleck waze zappos.',
-    contact_email:'anisa2@mohamed.com'
+router.post("/add", (req, res) => {
+  let { title, technologies, budget, description, contact_email } = req.body;
+  let errors = [];
+  //Validate Fields
+
+  if (!title) {
+    errors.push({ text: "Please add a title" });
   }
-  let { title, technologies, budget, description, contact_email } = data;
-  Job.create({
-    title, 
-    technologies, 
-    budget, 
-    description, 
-    contact_email
-  })
-  .then(job => res.redirect('/jobs'))
-  .catch(err => console.log('ERROR' + err))
-})
-module.exports = router
+  if (!technologies) {
+    errors.push({ text: "Please some technologies" });
+  }
+  if (!description) {
+    errors.push({ text: "Please add a description" });
+  }
+  if (!contact_email) {
+    errors.push({ text: "Please add a contact email" });
+  }
+
+  // Check for Errors
+  if (errors.length > 0) {
+    res.render("add", {
+      errors,
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email,
+    });
+  } else {
+    if (!budget) {
+      budget = "Unknown"; 
+    } else {
+      budget = `$${budget}`
+    }
+    //Make lowercase and remove space after comma
+    technologies = technologies.toLowerCase().replace(/, /g, ',')
+    //Insert into table
+    Job.create({
+      title,
+      technologies,
+      budget,
+      description,
+      contact_email,
+    })
+
+      .then((job) => res.redirect("/jobs"))
+      .catch((err) => console.log("ERROR" + err));
+  }
+});
+module.exports = router;
