@@ -13,8 +13,12 @@ Job.findAll()
 
 })
 .catch(err => console.log('ERROR' + err)))
+
+//DISPLAY ADD A JOB FORM
+router.get('/add', (req,res) => res.render('add'))
+
 //ADD A JOB
-router.get('/add', (req,res) => {
+router.post('/add', (req,res) => {
   const data = {
     title: 'Simple wordpress website',
     technologies: 'wordpress, php, html, css',
