@@ -7,8 +7,10 @@ const Job = require('../models/job')
 router.get('/', (req,res) => 
 Job.findAll()
 .then(jobs => {
-  console.log(jobs)
-  res.sendStatus(200)
+  res.render('jobs', {
+    jobs
+  })
+
 })
 .catch(err => console.log('ERROR' + err)))
 //ADD A JOB

@@ -3,22 +3,25 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const path = require("path");
 //DATABASE
-const db = require('./config/database')
+const db = require("./config/database");
 //TEST DATABASE
 db.authenticate()
-.then(()=>console.log('Database Connected ....'))
-.catch(err => console.log('Error' + err))
+  .then(() => console.log("Database Connected ...."))
+  .catch((err) => console.log("Error" + err));
 
 const app = express();
 
 //Handlebars
-app.engine('handlebars',exphbs({ defaultLayout: 'main'}))
-app.set('view engine', 'handlebars')
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-app.get('/',(req,res) => res.send('INDEX'));
+//Set static folder
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", (req, res) => res.send("INDEX"));
 
 //Job routes
-app.use('/jobs', require('./routes/jobs'))
+app.use("/jobs", require("./routes/jobs"));
 
 const PORT = process.env.PORT || 5000;
 
