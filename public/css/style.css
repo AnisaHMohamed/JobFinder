@@ -161,8 +161,8 @@ input[type='search'] {
   flex-basis: 600px;
 }
 
-/* Gigs */
-.gig {
+/* Jobs */
+.job {
   background: var(--bg-color);
   border-bottom: 4px solid var(--primary-color);
   color: #fff;
@@ -171,17 +171,17 @@ input[type='search'] {
   box-shadow: var(--box-shadow);
 }
 
-.gig ul {
+.job ul {
   list-style: none;
   display: flex;
 }
 
-.gig li {
+.job li {
   margin-right: 0.5rem;
   padding: 0.6rem;
 }
 
-.gig .tech span {
+.job .tech span {
   color: var(--primary-color);
 }
 
@@ -254,11 +254,11 @@ label {
     padding: 2.3rem;
   }
 
-  .gig ul {
+  .job ul {
     flex-direction: column;
   }
 
-  .gig .btn {
+  .job .btn {
     display: block;
     margin-top: 1rem;
     text-align: center;
